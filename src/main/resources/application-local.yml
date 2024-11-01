@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+
+logging:
+  level:
+    root: debug
