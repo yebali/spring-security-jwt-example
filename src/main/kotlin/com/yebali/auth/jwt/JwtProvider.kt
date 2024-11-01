@@ -1,5 +1,6 @@
 package com.yebali.auth.jwt
 
+import com.yebali.auth.entity.Member
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
@@ -20,7 +21,7 @@ class JwtProvider(
     private val key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret))
 
     // 토큰 생성
-    fun generateToken(authentication: Authentication): JwtToken {
+    fun generateToken(authentication: Authentication, member: Member): JwtToken {
         // 권한 가져오기
         val authorities = authentication.authorities.joinToString { it.authority }
 
@@ -28,6 +29,7 @@ class JwtProvider(
             .builder()
             .subject(authentication.name)
             .claim(JwtClaim.AUTH.value, authorities)
+            .claim(JwtClaim.NICKNAME.value, member.nickname)
             .expiration(Date(Date().time + 864000000))
             .signWith(key)
             .compact()

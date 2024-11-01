@@ -36,7 +36,9 @@ class MemberService(
     fun signIn(command: SignIn.Command): SignIn.Result {
         val authenticationToken = UsernamePasswordAuthenticationToken(command.username, command.password)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
+        val member = memberRepository.findByUsername(command.username)
+            ?: throw IllegalArgumentException("Member not found")
 
-        return SignIn.Result(token = jwtProvider.generateToken(authentication))
+        return SignIn.Result(token = jwtProvider.generateToken(authentication = authentication, member = member))
     }
 }
