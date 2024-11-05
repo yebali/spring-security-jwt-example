@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest
+@ActiveProfiles("test")
 class JwtServiceTest {
     @Autowired
     private lateinit var jwtService: JwtService
@@ -26,6 +28,8 @@ class JwtServiceTest {
         )
 
         val renewedJwt = assertDoesNotThrow {
+            // 같은 시간에 토큰이 발급되면 같은 값으로 발급된다.
+            Thread.sleep(1000)
             jwtService.renewJwt(originalJwt.refreshToken)
         }
 
