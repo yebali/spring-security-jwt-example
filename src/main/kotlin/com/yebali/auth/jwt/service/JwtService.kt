@@ -74,6 +74,7 @@ class JwtService(
         )
     }
 
+    // 토큰 갱신
     fun renewJwt(refreshToken: String): Jwt {
         val refreshTokenEntity = refreshTokenRepository.findByRefreshToken(refreshToken)
             ?: throw IllegalArgumentException("Refresh token is not valid")
@@ -115,7 +116,7 @@ class JwtService(
     }
 
     companion object {
-        private const val ACCESS_TOKEN_EXPIRATION = 864000000L
-        private const val REFRESH_TOKEN_EXPIRATION = 864000000L
+        private const val ACCESS_TOKEN_EXPIRATION = 86400000L
+        private const val REFRESH_TOKEN_EXPIRATION = 86400000L
     }
 }

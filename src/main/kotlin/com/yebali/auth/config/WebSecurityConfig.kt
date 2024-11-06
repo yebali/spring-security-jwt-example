@@ -25,6 +25,7 @@ class WebSecurityConfig(
                 it
                     .requestMatchers(*EXCLUDE_PATH.toTypedArray()).permitAll()
                     .requestMatchers("/member/test").hasRole("USER")
+                    .requestMatchers("/admin/test").hasRole("ADMIN")
                     .anyRequest().permitAll()
             }.addFilterBefore(
                 JwtAuthenticationFilter(jwtService = jwtService, excludePaths = EXCLUDE_PATH),
@@ -34,6 +35,6 @@ class WebSecurityConfig(
 
     companion object {
         // 회원가입, 로그인, 토큰 갱신은 토큰 검증을 하지 않는다.
-        private val EXCLUDE_PATH = listOf("/sign-up", "/sign-in", "/refresh-token")
+        private val EXCLUDE_PATH = listOf("/member/sign-up", "/member/sign-in", "/refresh-token")
     }
 }

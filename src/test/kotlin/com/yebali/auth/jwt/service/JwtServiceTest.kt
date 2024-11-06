@@ -20,7 +20,7 @@ class JwtServiceTest {
     private lateinit var memberService: MemberService
 
     @Test
-    fun `generate jwt from refresh token`() {
+    fun `Refresh token으로 새로운 Access token 재발급`() {
         signUp("yebali", "1234", "예발이")
 
         val originalJwt = jwtService.issueJwt(

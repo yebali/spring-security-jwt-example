@@ -5,11 +5,15 @@ import com.yebali.auth.member.controller.rest.SignUpRest
 import com.yebali.auth.member.service.MemberService
 import com.yebali.auth.member.service.command.SignIn
 import com.yebali.auth.member.service.command.SignUp
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/member")
 class MemberController(
     private val memberService: MemberService,
 ) {
@@ -46,5 +50,10 @@ class MemberController(
             accessToken = result.jwt.accessToken,
             refreshToken = result.jwt.refreshToken,
         )
+    }
+
+    @GetMapping("/test")
+    fun test(): String? {
+        return SecurityContextHolder.getContext().authentication.name
     }
 }
